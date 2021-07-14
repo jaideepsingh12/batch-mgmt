@@ -1,15 +1,15 @@
 import React from "react";
-import Login from "./pages/Login.page";
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
-import LoginPage from "./pages/Login.page";
-import SignupPage from "./pages/Signup.page";
-import DashboardPage from "./pages/Dashboard.page";
-import RecordingsPage from "./pages/Recordings.page";
+
+import AppContainer from "./pages/AppContainer";
+
+import AuthPage from "./pages/Auth.page";
 
 function App() {
   return (
@@ -18,17 +18,19 @@ function App() {
         <Route path="/" exact>
           <Redirect to="/login"></Redirect>
         </Route>
-        <Route path="/login">
-          <LoginPage></LoginPage>
+
+        <Route path={["/login", "/signup"]} exact>
+          <AuthPage />
         </Route>
-        <Route path="/signup">
-          <SignupPage></SignupPage>
-        </Route>
-        <Route path="/dashboard">
-          <DashboardPage></DashboardPage>
-        </Route>
-        <Route path="/records">
-          <RecordingsPage></RecordingsPage>
+        <Route
+          path={[
+            "/dashboard",
+            "/records",
+            "batch/:batchnumber/lecture/:lecturenumber",
+          ]}
+          exact
+        >
+          <AppContainer />
         </Route>
       </Switch>
     </Router>
