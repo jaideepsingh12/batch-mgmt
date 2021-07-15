@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 interface Props {}
 const Login: React.FC<Props> = (props) => {
@@ -6,12 +6,12 @@ const Login: React.FC<Props> = (props) => {
     <div className="w-1/2">
       this is the login page. If you dont have an account,
       <Link to="/signup">
-        <span className="text-blue-500">click here</span>{" "}
+        <span className="text-blue-500">click here</span>
       </Link>
       <Link to="/dashboard">
-        <span className="text-blue-500">Go to dashboard</span>{" "}
+        <span className="text-blue-500">Go to dashboard</span>
       </Link>
     </div>
   );
 };
-export default Login;
+export default memo(Login);

@@ -10,6 +10,7 @@ import {
 import AppContainer from "./pages/AppContainer";
 
 import AuthPage from "./pages/Auth.page";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
           exact
         >
           <AppContainer />
+        </Route>
+        <Route>
+          <NotFoundPage />
         </Route>
       </Switch>
     </Router>
