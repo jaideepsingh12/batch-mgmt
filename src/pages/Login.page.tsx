@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AuthHero from "../components/AuthHero";
 interface Props {}
 const Login: React.FC<Props> = (props) => {
   return (
