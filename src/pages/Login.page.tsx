@@ -1,32 +1,30 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { HiLockClosed } from "react-icons/hi";
 import { FaSpinner } from "react-icons/fa";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import Input from "./Input";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
-  const [data, setData] = useState({ email: "", password: "" });
-  const [touched, setTouched] = useState({ email: false, password: false });
-  const [submitting, setSubmitting] = useState(false);
   const history = useHistory();
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setData({ ...data, [event.target.name]: event.target.value });
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) =>
-    setTouched({ ...touched, [event.target.name]: true });
+  const myForm = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: yup.object().shape({
+      email: yup.string().required().email(),
+      password: yup.string().required().min(8),
+    }),
 
-  let emailError = "";
-  let passwordError = "";
+    onSubmit: (data) => {
+      setTimeout(() => {
+        console.log("form submitting", data);
+        history.push("/dashboard");
+      }, 5000);
+    },
+  });
 
-  if (!data.email) emailError = "An email address is needed";
-  else if (!data.email.endsWith("@gmail.com")) {
-    emailError = "Please enter a valid email address";
-  }
-
-  if (!data.password) passwordError = "A password is needed";
-  else if (data.password.length < 8) {
-    passwordError = "Please enter a password with atleast 8 characters";
-  }
   return (
     <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -49,64 +47,30 @@ const Login: React.FC<Props> = (props) => {
             </Link>
           </p>
         </div>
-        <form
-          className="mt-8 space-y-6"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (emailError || passwordError) {
-              console.log("invalid enrty");
-              return;
-            }
-
-            setSubmitting(true);
-            setTimeout(() => {
-              console.log("started submitting");
-              console.log(data);
-              history.push("/dashboard");
-            }, 2000);
-          }}
-        >
+        <form className="mt-8 space-y-6" onSubmit={myForm.handleSubmit}>
           <input type="hidden" name="remember" defaultValue="true" />
-          <div className="-space-y-px rounded-md shadow-sm">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
 
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                value={data.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="email"
-                required
-                className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            {touched.email && <div className="text-red-700">{emailError}</div>}
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={data.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="current-password"
-                required
-                className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-            {touched.password && (
-              <div className="text-red-700">{passwordError}</div>
-            )}
+          <div className="-space-y-px rounded-md shadow-sm">
+            <Input
+              error={myForm.errors.email}
+              touched={myForm.touched.email}
+              id="email"
+              type="email"
+              autoComplete="email"
+              required
+              {...myForm.getFieldProps("email")}
+              placeholder="E-mail"
+            />
+            <Input
+              error={myForm.errors.password}
+              touched={myForm.touched.password}
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              {...myForm.getFieldProps("password")}
+              placeholder="password"
+            />
           </div>
 
           <div className="flex items-center justify-between">
@@ -136,7 +100,10 @@ const Login: React.FC<Props> = (props) => {
           </div>
 
           <div>
-            <button className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button
+              disabled={!myForm.isValid}
+              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <HiLockClosed
                   className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400"
@@ -145,7 +112,7 @@ const Login: React.FC<Props> = (props) => {
               </span>
               Sign in
             </button>
-            {submitting && (
+            {myForm.isSubmitting && (
               <FaSpinner className="ml-4 -mt-6 text-white fill-current animate-spin"></FaSpinner>
             )}
           </div>
