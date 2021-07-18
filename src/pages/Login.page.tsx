@@ -26,24 +26,22 @@ const Login: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
+    <div className="flex justify-center min-h-screen px-4 py-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <img
-            className="w-auto h-12 mx-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-sm text-center text-gray-600">
-            Or{" "}
+          <h1 className="mt-6 text-4xl font-medium text-center text-gray-900 ">
+            Log In to{" "}
+            <span className="font-semibold uppercase text-blue-cork ">
+              cork
+            </span>
+          </h1>
+          <p className="mt-2 text-sm font-bold text-center text-gray-800">
+            New here ?{" "}
             <Link
               to="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium border-b text-blue-cork border-blue-cork"
             >
-              start your 14-day free trial
+              Create an account
             </Link>
           </p>
         </div>
@@ -62,6 +60,7 @@ const Login: React.FC<Props> = (props) => {
               placeholder="E-mail"
             />
             <Input
+              className="mt-5 "
               error={myForm.errors.password}
               touched={myForm.touched.password}
               id="password"

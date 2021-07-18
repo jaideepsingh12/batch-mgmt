@@ -5,7 +5,7 @@ const AuthHero: React.FC<Props> = (props) => {
   useEffect(() => console.log("Authhero rendering for the first time"), []);
 
   return (
-    <div className="w-1/2 h-screen text-white bg-blue-800">
+    <div className="h-screen text-white bg-blue-800 ">
       this is the logo image section
     </div>
   );
