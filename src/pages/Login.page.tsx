@@ -1,10 +1,14 @@
 import React, { memo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { HiLockClosed } from "react-icons/hi";
+import { IoPersonOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
 import { useFormik } from "formik";
+import { FiLock } from "react-icons/fi";
 import * as yup from "yup";
 import Input from "./Input";
+import MyToggle from "../components/toggle";
+import H1 from "../components/H1";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
@@ -21,21 +25,21 @@ const Login: React.FC<Props> = (props) => {
       setTimeout(() => {
         console.log("form submitting", data);
         history.push("/dashboard");
-      }, 5000);
+      }, 30000);
     },
   });
 
   return (
     <div className="flex justify-center min-h-screen px-4 py-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
+      <div className="w-full max-w-md px-8 py-3">
         <div>
-          <h1 className="mt-6 text-4xl font-medium text-center text-gray-900 ">
-            Log In to{" "}
+          <H1>
+            Log In to
             <span className="font-semibold uppercase text-blue-cork ">
               cork
             </span>
-          </h1>
-          <p className="mt-2 text-sm font-bold text-center text-gray-800">
+          </H1>
+          <p className="mt-2 mb-12 text-sm font-bold text-gray-800">
             New here ?{" "}
             <Link
               to="#"
@@ -45,35 +49,43 @@ const Login: React.FC<Props> = (props) => {
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={myForm.handleSubmit}>
+        <form onSubmit={myForm.handleSubmit}>
           <input type="hidden" name="remember" defaultValue="true" />
 
-          <div className="-space-y-px rounded-md shadow-sm">
-            <Input
-              error={myForm.errors.email}
-              touched={myForm.touched.email}
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              {...myForm.getFieldProps("email")}
-              placeholder="E-mail"
-            />
-            <Input
-              className="mt-5 "
-              error={myForm.errors.password}
-              touched={myForm.touched.password}
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              {...myForm.getFieldProps("password")}
-              placeholder="password"
-            />
+          <div className="rounded-md ">
+            <div className="relative pt-3 pb-6">
+              <IoPersonOutline className="absolute z-20 w-6 h-6 top-5 text-blue-cork " />
+              <Input
+                error={myForm.errors.email}
+                touched={myForm.touched.email}
+                id="email"
+                type="email"
+                autoComplete="email"
+                required
+                {...myForm.getFieldProps("email")}
+                placeholder="E-mail"
+                className="pl-10"
+              />
+            </div>
+            <div className="relative pt-3 pb-6">
+              <FiLock className="absolute z-20 w-6 h-6 top-10 text-blue-cork" />
+              <Input
+                className="pl-10 mt-5"
+                error={myForm.errors.password}
+                touched={myForm.touched.password}
+                id="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                {...myForm.getFieldProps("password")}
+                placeholder="password"
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
+              <p>Show password</p>
               <input
                 id="remember-me"
                 name="remember-me"
@@ -84,38 +96,47 @@ const Login: React.FC<Props> = (props) => {
                 htmlFor="remember-me"
                 className="block ml-2 text-sm text-gray-900"
               >
-                Remember me
+                <MyToggle />
               </label>
             </div>
-
-            <div className="text-sm">
-              <Link
-                to="/forgot-password"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-          </div>
-
-          <div>
             <button
               disabled={!myForm.isValid}
-              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="relative flex justify-center px-4 py-2 pl-8 text-sm font-medium text-white border border-transparent rounded-md group bg-blue-cork hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
+              {myForm.isSubmitting && (
+                <FaSpinner className="absolute text-xl fill-current text-red animate-spin"></FaSpinner>
+              )}
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <HiLockClosed
-                  className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400"
+                  className="w-5 h-5 text-white group-focus-visible:invisible group-focus-visible:opacity-0"
                   aria-hidden="true"
                 />
               </span>
-              Sign in
+              <span className="group-focus-visible:invisible group-focus-visible:opacity-0">
+                Log in
+              </span>
             </button>
-            {myForm.isSubmitting && (
-              <FaSpinner className="ml-4 -mt-6 text-white fill-current animate-spin"></FaSpinner>
-            )}
+          </div>
+
+          <div>
+            <div className="flex flex-col items-center mt-20 text-sm tracking-wider">
+              <div>
+                <input type="checkbox" id="logged-in" />
+                <label htmlFor="logged-in">keep me logged in</label>
+              </div>
+              <Link
+                to="/forgot-password"
+                className="mt-6 text-base font-bold tracking-widest text-blue-cork hover:text-indigo-500"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </div>
         </form>
+        <p className="mt-4">
+          © 2020 All Rights Reserved. CORK is a product of Designreset. Cookie
+          Preferences, Privacy, and Terms.
+        </p>
       </div>
     </div>
   );
