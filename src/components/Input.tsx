@@ -23,7 +23,7 @@ const Input: React.FC<Props> = ({
           id={id}
           {...rest}
           className={
-            "relative block w-full px-3 py-3 text-gray-900 placeholder-gray-400  focus:outline-none border-b border-solid border-gray-input focus:border-blue-cork rounded-none appearance-none rounded-t-md outline-none  tracking-widest transition-all bg-white duration-200 ease-in-out focus:z-10 sm:text-sm border-0 pl-9 " +
+            "relative block w-full px-3 py-3 text-gray-900 placeholder-gray-400  focus:outline-none border-b border-solid border-gray-input focus:border-blue-cork rounded-none appearance-none rounded-t-md outline-none  tracking-widest transition-all bg-white duration-200 ease-in-out focus:z-10 sm:text-sm border-0 pl-9 focus:ring-0 " +
             className
           }
           placeholder={placeholder}

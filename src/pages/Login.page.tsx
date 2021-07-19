@@ -26,7 +26,7 @@ const Login: React.FC<Props> = (props) => {
       setTimeout(() => {
         console.log("form submitting", data);
         history.push("/dashboard");
-      }, 30000);
+      }, 3000);
     },
   });
 
@@ -68,10 +68,9 @@ const Login: React.FC<Props> = (props) => {
                 className="pl-10"
               />
             </div>
-            <div className="relative pt-3 pb-6">
-              <FiLock className="absolute z-20 w-6 h-6 top-10 text-blue-cork" />
+            <div className="relative pt-3 pb-6 mb-2">
+              <FiLock className="absolute z-20 w-6 h-6 top-5 text-blue-cork" />
               <Input
-                className="mt-5 "
                 error={myForm.errors.password}
                 touched={myForm.touched.password}
                 id="password"
@@ -86,12 +85,12 @@ const Login: React.FC<Props> = (props) => {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <p>Show password</p>
+              <p className="pb-1 font-semibold">Show password</p>
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                className="hidden w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 "
               />
               <label
                 htmlFor="remember-me"
@@ -120,12 +119,12 @@ const Login: React.FC<Props> = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-col items-center mt-20 text-sm font-thin tracking-widest text-gray-check-box">
+            <div className="flex flex-col items-center mt-16 text-sm font-thin tracking-widest text-gray-check-box">
               <div>
                 <input
                   type="checkbox"
                   id="logged-in"
-                  className="w-5 h-5 text-white bg-pink-400 border-2 border-yellow-500 rounded-md focus:border-green-700"
+                  className="w-5 h-5 border-2 rounded-md outline-none border-gray-check-box text-blue focus:border-blue-cork focus:ring-0"
                 />
                 <label htmlFor="logged-in" className="pl-4">
                   Keep me logged in
@@ -140,7 +139,7 @@ const Login: React.FC<Props> = (props) => {
             </div>
           </div>
         </form>
-        <P className="mt-5">
+        <P className="mt-20">
           © 2020 All Rights Reserved. CORK is a product of Designreset. Cookie
           Preferences, Privacy, and Terms.
         </P>

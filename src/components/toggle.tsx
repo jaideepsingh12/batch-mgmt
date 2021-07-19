@@ -9,14 +9,14 @@ export default function MyToggle() {
       checked={enabled}
       onChange={setEnabled}
       className={`${
-        enabled ? "bg-blue-600" : "bg-gray-200"
-      } relative inline-flex items-center h-5 rounded-full w-11 transition-all duration-200`}
+        enabled ? "bg-blue-600" : "bg-gray-input"
+      } relative inline-flex items-center h-4 rounded-full w-9 transition-all duration-200`}
     >
       <span className="sr-only">Enable notifications</span>
       <span
-        className={`${enabled ? "translate-x-6" : "translate-x-1"} ${
+        className={`${enabled ? "translate-x-6" : "translate-x-0"} ${
           enabled ? "bg-white" : "bg-blue-cork"
-        } inline-block w-4 h-4 transform  rounded-full transition-all duration-200`}
+        } inline-block w-3 h-3 transform  rounded-full transition-all duration-200`}
       />
     </Switch>
   );

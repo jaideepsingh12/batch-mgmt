@@ -9,6 +9,7 @@ import Input from "../components/Input";
 import MyToggle from "../components/toggle";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import P from "../components/P";
 
 interface Props {}
 const Signup: React.FC<Props> = (props) => {
@@ -16,6 +17,7 @@ const Signup: React.FC<Props> = (props) => {
   const myForm = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: yup.object().shape({
+      username: yup.string().required().min(3),
       email: yup.string().required().email(),
       password: yup.string().required().min(8),
     }),
@@ -24,7 +26,7 @@ const Signup: React.FC<Props> = (props) => {
       setTimeout(() => {
         console.log("form submitting", data);
         history.push("/dashboard");
-      }, 30000);
+      }, 3000);
     },
   });
   return (
@@ -49,18 +51,34 @@ const Signup: React.FC<Props> = (props) => {
             <div className="relative pt-3 pb-6">
               <IoPersonOutline className="absolute z-20 w-6 h-6 top-5 text-blue-cork " />
               <Input
-                error={myForm.errors.email}
-                touched={myForm.touched.email}
-                id="email"
-                autoComplete="email"
+                // error={myForm.errors.username}
+                // touched={myForm.touched.username}
+                id="username"
+                autoComplete="username"
                 required
-                {...myForm.getFieldProps("email")}
+                {...myForm.getFieldProps("username")}
                 placeholder="Username"
                 className="pl-10"
               />
             </div>
             <div className="relative pt-3 pb-6">
-              <IoPersonOutline className="absolute z-20 w-6 h-6 top-5 text-blue-cork " />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="absolute z-20 w-6 h-6 top-5 text-blue-cork "
+              >
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+              </svg>
+
+              {/* <IoPersonOutline className="absolute z-20 w-6 h-6 top-5 text-blue-cork " /> */}
               <Input
                 error={myForm.errors.email}
                 touched={myForm.touched.email}
@@ -73,9 +91,8 @@ const Signup: React.FC<Props> = (props) => {
               />
             </div>
             <div className="relative pt-3 pb-6">
-              <FiLock className="absolute z-20 w-6 h-6 top-10 text-blue-cork" />
+              <FiLock className="absolute z-20 w-6 h-6 top-5 text-blue-cork" />
               <Input
-                className="mt-5 "
                 error={myForm.errors.password}
                 touched={myForm.touched.password}
                 id="password"
@@ -87,15 +104,24 @@ const Signup: React.FC<Props> = (props) => {
               />
             </div>
           </div>
-
-          <div className="flex items-center justify-between">
+          <div className="mt-2 font-thin tracking-widest text-gray-check-box ">
+            <input
+              type="checkbox"
+              id="logged-in"
+              className="w-5 h-5 border-2 rounded-md outline-none border-gray-check-box text-blue focus:border-blue-cork focus:ring-0"
+            />
+            <label htmlFor="logged-in" className="pl-4 ">
+              I agree to the terms and conditions
+            </label>
+          </div>
+          <div className="flex items-center justify-between mt-5">
             <div className="flex items-center">
-              <p>Show password</p>
+              <p className="pb-1 font-semibold">Show password</p>
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                className="hidden w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 "
               />
               <label
                 htmlFor="remember-me"
@@ -117,33 +143,16 @@ const Signup: React.FC<Props> = (props) => {
                   aria-hidden="true"
                 />
               </span>
-              <span className="group-focus-visible:invisible group-focus-visible:opacity-0">
-                Log in
+              <span className="pt-1 pl-1 group-focus-visible:invisible group-focus-visible:opacity-0">
+                Get Started
               </span>
             </button>
           </div>
-
-          <div>
-            <div className="flex flex-col items-center mt-20 text-sm font-thin tracking-widest text-gray-check-box">
-              <div>
-                <input
-                  type="checkbox"
-                  id="logged-in"
-                  className="w-5 h-5 text-white bg-pink-400 border-2 border-yellow-500 rounded-md focus:border-green-700"
-                />
-                <label htmlFor="logged-in" className="pl-4">
-                  Keep me logged in
-                </label>
-              </div>
-              <Link
-                to="/forgot-password"
-                className="mt-6 text-base font-bold tracking-widest text-blue-cork hover:text-indigo-500"
-              >
-                Forgot password?
-              </Link>
-            </div>
-          </div>
         </form>
+        <P className="mt-20">
+          © 2020 All Rights Reserved. CORK is a product of Designreset. Cookie
+          Preferences, Privacy, and Terms.
+        </P>
       </div>
     </div>
   );
