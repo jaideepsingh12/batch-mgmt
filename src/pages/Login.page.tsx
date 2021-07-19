@@ -6,9 +6,10 @@ import { FaSpinner } from "react-icons/fa";
 import { useFormik } from "formik";
 import { FiLock } from "react-icons/fi";
 import * as yup from "yup";
-import Input from "./Input";
+import Input from "../components/Input";
 import MyToggle from "../components/toggle";
 import H1 from "../components/H1";
+import P from "../components/P";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
@@ -30,20 +31,21 @@ const Login: React.FC<Props> = (props) => {
   });
 
   return (
-    <div className="flex justify-center min-h-screen px-4 py-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md px-8 py-3">
+    <div className="flex justify-center min-h-screen px-4 py-3 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md px-8">
         <div>
           <H1>
-            Log In to
+            Log In to{" "}
             <span className="font-semibold uppercase text-blue-cork ">
               cork
             </span>
           </H1>
-          <p className="mt-2 mb-12 text-sm font-bold text-gray-800">
+
+          <p className="mt-2 mb-12 text-sm font-bold tracking-wider text-gray-800">
             New here ?{" "}
             <Link
-              to="#"
-              className="font-medium border-b text-blue-cork border-blue-cork"
+              to="/signup"
+              className="border-b text-blue-cork border-blue-cork"
             >
               Create an account
             </Link>
@@ -59,7 +61,6 @@ const Login: React.FC<Props> = (props) => {
                 error={myForm.errors.email}
                 touched={myForm.touched.email}
                 id="email"
-                type="email"
                 autoComplete="email"
                 required
                 {...myForm.getFieldProps("email")}
@@ -70,7 +71,7 @@ const Login: React.FC<Props> = (props) => {
             <div className="relative pt-3 pb-6">
               <FiLock className="absolute z-20 w-6 h-6 top-10 text-blue-cork" />
               <Input
-                className="pl-10 mt-5"
+                className="mt-5 "
                 error={myForm.errors.password}
                 touched={myForm.touched.password}
                 id="password"
@@ -101,7 +102,7 @@ const Login: React.FC<Props> = (props) => {
             </div>
             <button
               disabled={!myForm.isValid}
-              className="relative flex justify-center px-4 py-2 pl-8 text-sm font-medium text-white border border-transparent rounded-md group bg-blue-cork hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="relative flex justify-center px-4 py-2 pl-8 text-sm font-medium text-white transition-shadow border border-transparent rounded-md shadow-button group bg-blue-cork hover:shadow-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               {myForm.isSubmitting && (
                 <FaSpinner className="absolute text-xl fill-current text-red animate-spin"></FaSpinner>
@@ -119,10 +120,16 @@ const Login: React.FC<Props> = (props) => {
           </div>
 
           <div>
-            <div className="flex flex-col items-center mt-20 text-sm tracking-wider">
+            <div className="flex flex-col items-center mt-20 text-sm font-thin tracking-widest text-gray-check-box">
               <div>
-                <input type="checkbox" id="logged-in" />
-                <label htmlFor="logged-in">keep me logged in</label>
+                <input
+                  type="checkbox"
+                  id="logged-in"
+                  className="w-5 h-5 text-white bg-pink-400 border-2 border-yellow-500 rounded-md focus:border-green-700"
+                />
+                <label htmlFor="logged-in" className="pl-4">
+                  Keep me logged in
+                </label>
               </div>
               <Link
                 to="/forgot-password"
@@ -133,10 +140,10 @@ const Login: React.FC<Props> = (props) => {
             </div>
           </div>
         </form>
-        <p className="mt-4">
+        <P className="mt-5">
           © 2020 All Rights Reserved. CORK is a product of Designreset. Cookie
           Preferences, Privacy, and Terms.
-        </p>
+        </P>
       </div>
     </div>
   );
