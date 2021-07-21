@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { HiLockClosed } from "react-icons/hi";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
 import { useFormik } from "formik";
@@ -10,6 +9,7 @@ import Input from "../components/Input";
 import MyToggle from "../components/toggle";
 import H1 from "../components/H1";
 import P from "../components/P";
+import Button from "../components/Button/button";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
@@ -99,23 +99,10 @@ const Login: React.FC<Props> = (props) => {
                 <MyToggle />
               </label>
             </div>
-            <button
-              disabled={!myForm.isValid}
-              className="relative flex justify-center px-4 py-2 pl-8 text-sm font-medium text-white transition-shadow border border-transparent rounded-md shadow-button group bg-blue-cork hover:shadow-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              {myForm.isSubmitting && (
-                <FaSpinner className="absolute text-xl fill-current text-red animate-spin"></FaSpinner>
-              )}
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <HiLockClosed
-                  className="w-5 h-5 text-white group-focus-visible:invisible group-focus-visible:opacity-0"
-                  aria-hidden="true"
-                />
-              </span>
-              <span className="group-focus-visible:invisible group-focus-visible:opacity-0">
-                Log in
-              </span>
-            </button>
+            <Button theme="primary">Sign in </Button>
+            {myForm.isSubmitting && (
+              <FaSpinner className="absolute text-xl fill-current text-red animate-spin"></FaSpinner>
+            )}
           </div>
 
           <div>
