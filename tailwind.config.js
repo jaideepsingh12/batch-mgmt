@@ -17,6 +17,7 @@ module.exports = {
         red: theme("colors.red.500"),
         green: theme("colors.green.500"),
         blue: theme("colors.blue.200"),
+        gray: theme("colors.gray.500"),
       }),
       fontSize: { h1: "2.5rem" },
       boxShadow: { button: "0 10px 20px -10px rgba(67,97,238)" },

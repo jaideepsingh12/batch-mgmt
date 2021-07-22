@@ -7,6 +7,8 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import ProBar from "./components/proBar/ProBar";
+
 import AppContainer from "./pages/AppContainer";
 
 import AuthPage from "./pages/Auth.page";
@@ -15,6 +17,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 function App() {
   return (
     <Router>
+      <ProBar />
       <Switch>
         <Route path="/" exact>
           <Redirect to="/login"></Redirect>
