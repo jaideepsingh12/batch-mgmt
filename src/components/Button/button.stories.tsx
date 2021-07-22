@@ -3,7 +3,7 @@ import "../../index.css";
 import { HiLockClosed, HiLogin, HiMoon } from "react-icons/hi";
 const icons = { HiLockClosed, HiLogin, HiMoon };
 const XYZ = {
-  title: "My awesome button",
+  title: "Button",
   component: Button,
   argTypes: {
     Icon: {
