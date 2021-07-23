@@ -103,7 +103,6 @@ const Login: React.FC<Props> = (props) => {
             {myForm.isSubmitting && (
               <FaSpinner className="absolute bottom-0 right-0 text-xl fill-blue text-red animate-spin"></FaSpinner>
             )}
-            <FaSpinner className="absolute bottom-0 right-0 text-xl fill-blue text-red animate-spin"></FaSpinner>
           </div>
 
           <div>

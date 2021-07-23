@@ -1,5 +1,4 @@
 import React, { ImgHTMLAttributes, memo } from "react";
-import AvtarStackImg from "./AvtarStackImg";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   children?: string[];
@@ -39,7 +38,7 @@ const AvtarStack: React.FC<Props> = ({ children, stacklength, size }) => {
             return (
               <img
                 className={
-                  "object-cover  transform border-4 ring-2 ring-white ring-offset-0 ring-inset rounded-full cursor-pointer focus:translate-y-10 " +
+                  "object-cover  transform border-4 ring-2 ring-white ring-offset-0 ring-inset rounded-full cursor-pointer hover:-translate-y-2 hover:scale-110 " +
                   avtarSize
                 }
                 src={element}
