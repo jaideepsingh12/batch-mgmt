@@ -6,7 +6,7 @@ const AuthHero: React.FC<Props> = (props) => {
   useEffect(() => console.log("Authhero rendering for the first time"), []);
 
   return (
-    <div className="relative bg-black">
+    <div className="relative hidden bg-black lg:block">
       <img
         src={AuthImg}
         alt="AuthImg"

@@ -6,6 +6,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import AvtarStack from "./components/AvtarStack/AvtarStack";
 
 import AppContainer from "./pages/AppContainer";
 

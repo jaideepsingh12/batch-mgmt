@@ -83,7 +83,7 @@ const Login: React.FC<Props> = (props) => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="relative flex items-center justify-between">
             <div className="flex items-center">
               <p className="pb-1 font-semibold">Show password</p>
               <input
@@ -101,8 +101,9 @@ const Login: React.FC<Props> = (props) => {
             </div>
             <Button theme="primary">Sign in </Button>
             {myForm.isSubmitting && (
-              <FaSpinner className="absolute text-xl fill-current text-red animate-spin"></FaSpinner>
+              <FaSpinner className="absolute bottom-0 right-0 text-xl fill-blue text-red animate-spin"></FaSpinner>
             )}
+            <FaSpinner className="absolute bottom-0 right-0 text-xl fill-blue text-red animate-spin"></FaSpinner>
           </div>
 
           <div>

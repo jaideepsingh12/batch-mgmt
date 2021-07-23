@@ -6,7 +6,7 @@ import SignupPage from "./Signup.page";
 interface Props {}
 const AuthPage: React.FC<Props> = (props) => {
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid lg:grid-cols-2">
       <Router>
         <Switch>
           <Route path="/login">

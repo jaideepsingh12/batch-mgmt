@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, memo } from "react";
 import { IconType } from "react-icons";
+import { HiLockClosed } from "react-icons/hi";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   theme?: "primary" | "secondary";
@@ -27,17 +28,12 @@ const Button: React.FC<Props> = ({
     >
       {Icon && (
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-          <Icon
-            className="w-5 h-5 text-white group-focus-visible:invisible group-focus-visible:opacity-0 "
-            aria-hidden="true"
-          />
+          <Icon className="w-5 h-5 text-white " aria-hidden="true" />
         </span>
       )}
-      <span className="group-focus-visible:invisible group-focus-visible:opacity-0">
-        {children}
-      </span>
+      <span className="">{children}</span>
     </button>
   );
 };
-Button.defaultProps = { theme: "primary" };
+Button.defaultProps = { Icon: HiLockClosed };
 export default memo(Button);

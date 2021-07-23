@@ -1,8 +1,9 @@
 import React, { memo } from "react";
 interface Props {
   theme?: "Primary" | "Warning" | "Success" | "Error";
+  children?: string;
 }
-const Alert: React.FC<Props> = ({ theme }) => {
+const Alert: React.FC<Props> = ({ theme, children }) => {
   let className: string;
   if (theme === "Primary") {
     className = "text-blue-700 bg-blue-100";
@@ -15,8 +16,9 @@ const Alert: React.FC<Props> = ({ theme }) => {
   }
 
   return (
-    <div className={"p-4  " + className}>
-      {theme}! This is the new alert just for testing storybook.
+    <div className={"px-4 py-2  " + className}>
+      <span>{theme}! </span>
+      {children}
     </div>
   );
 };
