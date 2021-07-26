@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import React, { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchGroups } from "../api";
+import substitute from "../img/AuthImg.webp";
 interface Props {}
 const Dashboard: React.FC<Props> = (props) => {
   const [groups, setGroups] = useState<any>([]);
