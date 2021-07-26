@@ -1,4 +1,5 @@
 import React from "react";
+import { LS_LOGIN_TOKEN } from "./api";
 
 import {
   BrowserRouter as Router,
@@ -6,7 +7,6 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import AvtarStack from "./components/AvtarStack/AvtarStack";
 
 import AppContainer from "./pages/AppContainer";
 
@@ -14,11 +14,12 @@ import AuthPage from "./pages/Auth.page";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
+  const token = localStorage.getItem(LS_LOGIN_TOKEN);
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
-          <Redirect to="/login"></Redirect>
+          {token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
         </Route>
 
         <Route path={["/login", "/signup"]} exact>

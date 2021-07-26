@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
 import { useFormik } from "formik";
@@ -10,6 +10,8 @@ import MyToggle from "../components/toggle";
 import H1 from "../components/H1";
 import P from "../components/P";
 import Button from "../components/Button/button";
+import { login } from "../api";
+import { useHistory } from "react-router-dom";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
@@ -23,10 +25,9 @@ const Login: React.FC<Props> = (props) => {
     }),
 
     onSubmit: (data) => {
-      setTimeout(() => {
-        console.log("form submitting", data);
+      login(data).then((user) => {
         history.push("/dashboard");
-      }, 3000);
+      });
     },
   });
 
@@ -61,6 +62,7 @@ const Login: React.FC<Props> = (props) => {
                 error={myForm.errors.email}
                 touched={myForm.touched.email}
                 id="email"
+                type="email"
                 autoComplete="email"
                 required
                 {...myForm.getFieldProps("email")}
@@ -85,17 +87,17 @@ const Login: React.FC<Props> = (props) => {
 
           <div className="relative flex items-center justify-between">
             <div className="flex items-center">
-              <p className="pb-1 font-semibold">Show password</p>
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="hidden w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 "
+                className="hidden w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
               />
               <label
                 htmlFor="remember-me"
                 className="block ml-2 text-sm text-gray-900"
               >
+                {" "}
                 <MyToggle />
               </label>
             </div>
