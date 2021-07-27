@@ -5,12 +5,12 @@ import { FaSpinner } from "react-icons/fa";
 import { useFormik } from "formik";
 import { FiLock } from "react-icons/fi";
 import * as yup from "yup";
-import Input from "../components/Input";
-import MyToggle from "../components/toggle";
-import H1 from "../components/H1";
-import P from "../components/P";
-import Button from "../components/Button/button";
-import { login } from "../api";
+import Input from "../../components/Input";
+import MyToggle from "../../components/toggle";
+import H1 from "../../components/H1";
+import P from "../../components/P";
+import Button from "../../components/Button/button";
+import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 
 interface Props {}

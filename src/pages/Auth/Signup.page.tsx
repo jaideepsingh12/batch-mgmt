@@ -4,12 +4,12 @@ import { FiLock } from "react-icons/fi";
 import { HiLockClosed } from "react-icons/hi";
 import { IoPersonOutline } from "react-icons/io5";
 import { Link, useHistory } from "react-router-dom";
-import H1 from "../components/H1";
-import Input from "../components/Input";
-import MyToggle from "../components/toggle";
+import H1 from "../../components/H1";
+import Input from "../../components/Input";
+import MyToggle from "../../components/toggle";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import P from "../components/P";
+import P from "../../components/P";
 
 interface Props {}
 const Signup: React.FC<Props> = (props) => {

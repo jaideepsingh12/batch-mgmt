@@ -1,5 +1,5 @@
-import React from "react";
-import { LS_LOGIN_TOKEN } from "./api";
+import React, { lazy, Suspense } from "react";
+import { LS_AUTH_TOKEN } from "./api/base";
 
 import {
   BrowserRouter as Router,
@@ -8,38 +8,43 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import AppContainer from "./pages/AppContainer";
+import AppContainerPageLazy from "./pages/Appcontainer/AppContainer.lazy";
 
-import AuthPage from "./pages/Auth.page";
+// import AuthPage from "./pages/Auth.page";
 import NotFoundPage from "./pages/NotFoundPage";
+import AuthPageLazy from "./pages/Auth/Auth.lazy";
 
 function App() {
-  const token = localStorage.getItem(LS_LOGIN_TOKEN);
+  const token = localStorage.getItem(LS_AUTH_TOKEN);
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          {token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
-        </Route>
+    <Suspense
+      fallback={<div className="bg-red-500">AppContainer loading...</div>}
+    >
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            {token ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+          </Route>
 
-        <Route path={["/login", "/signup"]} exact>
-          <AuthPage />
-        </Route>
-        <Route
-          path={[
-            "/dashboard",
-            "/records",
-            "batch/:batchnumber/lecture/:lecturenumber",
-          ]}
-          exact
-        >
-          <AppContainer />
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </Router>
+          <Route path={["/login", "/signup"]} exact>
+            {token ? <Redirect to="/dashboard" /> : <AuthPageLazy />}
+          </Route>
+          <Route
+            path={[
+              "/dashboard",
+              "/records",
+              "batch/:batchnumber/lecture/:lecturenumber",
+            ]}
+            exact
+          >
+            {token ? <AppContainerPageLazy /> : <Redirect to="/login" />}
+          </Route>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </Router>
+    </Suspense>
   );
 }
 
