@@ -12,8 +12,11 @@ import P from "../../components/P";
 import Button from "../../components/Button/button";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
+import { User } from "../../modals/User";
 
-interface Props {}
+interface Props {
+  onLogin: (user: User) => void;
+}
 const Login: React.FC<Props> = (props) => {
   const history = useHistory();
 
@@ -26,6 +29,7 @@ const Login: React.FC<Props> = (props) => {
 
     onSubmit: (data) => {
       login(data).then((user) => {
+        props.onLogin(user);
         history.push("/dashboard");
       });
     },
