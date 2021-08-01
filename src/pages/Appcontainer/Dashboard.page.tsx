@@ -1,54 +1,62 @@
 // import { useFormik } from "formik";
 import React, { memo, useEffect, useState } from "react";
-
 import { fetchGroups } from "../../api/group";
-// import substitute from "../img/AuthImg.webp";
+import Button from "../../components/Button/button";
+import { HiSearch } from "react-icons/hi";
+
 interface Props {}
 const Dashboard: React.FC<Props> = (props) => {
   const [groups, setGroups] = useState<any>([]);
   const [keyword, setKeyword] = useState("");
+  const [keyword2, setKeyword2] = useState("");
   const [offset, setoffset] = useState(0);
-  let limit = 5;
+  const [data, setData] = useState("");
+  const limit = 5;
   const imgError = (e: any) => {
     e.target.onerror = null;
     e.target.src = "https://www.snarkypuppy.com/press/logos/logo-pup.png";
+  };
+  const handlesubmit = (e: any) => {
+    e.preventDefault();
+    setData(e.target.firstChild.value);
+    console.log(e.target.firstChild.value);
   };
 
   useEffect(() => {
     fetchGroups({
       status: "all-groups",
-      query: keyword,
+      query: data,
       limit: limit,
       offset: offset,
     }).then((data) => setGroups(data));
-  }, [keyword, offset, limit]);
+  }, [data, offset, limit]);
 
   return (
-    <div className="flex-grow">
-      <div className="flex">
-        <div>
+    <div className="flex-grow ">
+      <div className="flex justify-around mt-8 mb-4">
+        <div className="flex-1">
           <input
             type="text"
             id="autoSearch"
-            className="rounded-full "
+            className="w-4/5 rounded-full "
             value={keyword}
             placeholder={"search groups"}
             onChange={(e) => setKeyword(e.target.value)}
           />
         </div>
-        <div>
+        <form onSubmit={handlesubmit} className="flex flex-1 align-middle">
           <input
             type="text"
             id="search"
-            className="rounded-full "
-            value={keyword}
+            className="w-4/5 rounded-full "
+            value={keyword2}
             placeholder={"search groups"}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => setKeyword2(e.target.value)}
           />
-          <button type="submit" className="p-4 bg-blue-500">
-            Search
+          <button type="submit" className="-ml-8">
+            <HiSearch className="w-6 h-6" />
           </button>
-        </div>
+        </form>
       </div>
 
       {groups.map(function (group: any, index: number, groups: []) {
@@ -57,9 +65,7 @@ const Dashboard: React.FC<Props> = (props) => {
           <div className={"flex mr-4 px-3 py-3 " + className}>
             <img
               src={group.group_image_url}
-              onError={(e) => {
-                imgError(e);
-              }}
+              onError={(e) => imgError(e)}
               alt="#"
               className="object-cover w-16 h-16"
             />
@@ -72,19 +78,23 @@ const Dashboard: React.FC<Props> = (props) => {
         );
       })}
 
-      <button
-        className="bg-yellow-600"
-        onClick={() => setoffset(offset > 0 ? offset - 6 : 0)}
-      >
-        Previous
-      </button>
+      <div className="flex justify-around mt-4 ">
+        <Button
+          className="bg-red-500"
+          onClick={() => setoffset(offset > 0 ? offset - 6 : 0)}
+        >
+          Previous
+        </Button>
 
-      <button
-        className="bg-yellow-600"
-        onClick={() => setoffset(groups.length === limit ? offset + 6 : offset)}
-      >
-        Next
-      </button>
+        <Button
+          className="bg-red-500"
+          onClick={() =>
+            setoffset(groups.length === limit ? offset + 6 : offset)
+          }
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };

@@ -15,6 +15,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AuthPageLazy from "./pages/Auth/Auth.lazy";
 import { User } from "./modals/User";
 import { me } from "./api/auth";
+import AppContext from "./App.context";
 
 function App() {
   const [user, setUser] = useState<User>();
@@ -30,42 +31,40 @@ function App() {
   }
 
   return (
-    <Suspense
-      fallback={<div className="bg-red-500">AppContainer loading...</div>}
-    >
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            {user ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
-          </Route>
+    <AppContext.Provider value={{ user, setUser }}>
+      <Suspense
+        fallback={<div className="bg-red-500">AppContainer loading...</div>}
+      >
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              {user ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+            </Route>
 
-          <Route path={["/login", "/signup"]} exact>
-            {user ? (
-              <Redirect to="/dashboard" />
-            ) : (
-              <AuthPageLazy onLogin={(u) => setUser(u)} />
-            )}
-          </Route>
-          <Route
-            path={[
-              "/dashboard",
-              "/records",
-              "batch/:batchnumber/lecture/:lecturenumber",
-            ]}
-            exact
-          >
-            {user ? (
-              <AppContainerPageLazy user={user!} />
-            ) : (
-              <Redirect to="/login" />
-            )}
-          </Route>
-          <Route>
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </Router>
-    </Suspense>
+            <Route path={["/login", "/signup"]} exact>
+              {user ? (
+                <Redirect to="/dashboard" />
+              ) : (
+                <AuthPageLazy /*onLogin={setUser}*/ /> //onLogin takes a function that takes User as input. Since SetUser also takes either User or a function that takes User, therefore we can directly pass setUser also. So onLogin={setUser} will also be valid.
+              )}
+            </Route>
+            <Route
+              path={[
+                "/dashboard",
+                "/records",
+                "batch/:batchnumber/lecture/:lecturenumber",
+              ]}
+              exact
+            >
+              {user ? <AppContainerPageLazy /> : <Redirect to="/login" />}
+            </Route>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
+        </Router>
+      </Suspense>
+    </AppContext.Provider>
   );
 }
 

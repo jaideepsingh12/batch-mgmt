@@ -5,13 +5,11 @@ import { User } from "../../modals/User";
 import DashboardPage from "./Dashboard.page";
 import LecturePage from "./Lecture.page";
 import Recordings from "./Recordings.page";
-interface Props {
-  user: User;
-}
-const AppContainer: React.FC<Props> = ({ user }) => {
+interface Props {}
+const AppContainer: React.FC<Props> = () => {
   return (
     <div className="flex">
-      <Sidebar user={user} />
+      <Sidebar />
       <Switch>
         <Route path="/dashboard">
           <DashboardPage></DashboardPage>
