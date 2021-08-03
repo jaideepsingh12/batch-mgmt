@@ -7,7 +7,7 @@ export interface Group {
   is_private: boolean;
   description: string;
   introductory_message?: string;
-  group_image_url: null | string;
+  group_image_url: string;
   join_code: string;
   created_at: Date;
   updated_at: Date;

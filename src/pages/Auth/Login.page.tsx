@@ -1,4 +1,4 @@
-import React, { memo, useContext } from "react";
+import React, { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
@@ -12,13 +12,13 @@ import P from "../../components/P";
 import Button from "../../components/Button/button";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
-import { User } from "../../modals/User";
-import AppContext from "../../App.context";
+import { useDispatch } from "react-redux";
+import { meFetchedAction, uiSidebarToggle } from "../../store";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
   const history = useHistory();
-  const { setUser } = useContext(AppContext);
+  const dispatch = useDispatch();
 
   const myForm = useFormik({
     initialValues: { email: "", password: "" },
@@ -29,7 +29,7 @@ const Login: React.FC<Props> = (props) => {
 
     onSubmit: (data) => {
       login(data).then((u) => {
-        setUser(u);
+        dispatch(meFetchedAction(u));
         history.push("/dashboard");
       });
     },

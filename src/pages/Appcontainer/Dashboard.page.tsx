@@ -3,10 +3,13 @@ import React, { memo, useEffect, useState } from "react";
 import { fetchGroups } from "../../api/group";
 import Button from "../../components/Button/button";
 import { HiSearch } from "react-icons/hi";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../store";
+import { Group } from "../../modals/Group";
 
 interface Props {}
 const Dashboard: React.FC<Props> = (props) => {
-  const [groups, setGroups] = useState<any>([]);
+  // const [groups, setGroups] = useState<any>([]);
   const [keyword, setKeyword] = useState("");
   const [keyword2, setKeyword2] = useState("");
   const [offset, setoffset] = useState(0);
@@ -21,6 +24,8 @@ const Dashboard: React.FC<Props> = (props) => {
     setData(e.target.firstChild.value);
     console.log(e.target.firstChild.value);
   };
+  const groups = useAppSelector((state) => state.groups);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchGroups({
@@ -28,7 +33,7 @@ const Dashboard: React.FC<Props> = (props) => {
       query: data,
       limit: limit,
       offset: offset,
-    }).then((data) => setGroups(data));
+    }).then((data) => dispatch({ type: "groups/fetch", payload: data }));
   }, [data, offset, limit]);
 
   return (
@@ -59,7 +64,7 @@ const Dashboard: React.FC<Props> = (props) => {
         </form>
       </div>
 
-      {groups.map(function (group: any, index: number, groups: []) {
+      {groups.map(function (group: Group, index: number, groups: Group[]) {
         const className = index % 2 === 1 ? "bg-blue-100" : "bg-blue-300";
         return (
           <div className={"flex mr-4 px-3 py-3 " + className}>
