@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { LS_AUTH_TOKEN } from "./api/base";
-import { useDispatch } from "react-redux";
-import { meFetchedAction, uiSidebarToggle, useAppSelector } from "./store";
+
+import { useAppSelector } from "./store";
 
 import {
   BrowserRouter as Router,
@@ -17,25 +17,21 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AuthPageLazy from "./pages/Auth/Auth.lazy";
 
 import { me } from "./api/auth";
+import { authActions } from "./actions/Auth.actions";
+import { meSelector } from "./selectors/auth.selectors";
 
 function App() {
   // const [user, setUser] = useState<User>();
-  const user = useAppSelector((state) => state.me);
+  const user = useAppSelector(meSelector);
   const token = localStorage.getItem(LS_AUTH_TOKEN);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!token || user) {
       return;
     }
-    me().then((u) => dispatch(meFetchedAction(u)));
+    me().then((u) => authActions.fetch(u));
   }, []);
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("sidebar toggle dispatched");
 
-      dispatch(uiSidebarToggle(false));
-    }, 8000);
-  }, []);
   if (!user && token) {
     return <div>loading...</div>;
   }

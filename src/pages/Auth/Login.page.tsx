@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa";
@@ -12,13 +12,12 @@ import P from "../../components/P";
 import Button from "../../components/Button/button";
 import { login } from "../../api/auth";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { meFetchedAction, uiSidebarToggle } from "../../store";
+
+import { authActions } from "../../actions/Auth.actions";
 
 interface Props {}
 const Login: React.FC<Props> = (props) => {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const myForm = useFormik({
     initialValues: { email: "", password: "" },
@@ -29,11 +28,12 @@ const Login: React.FC<Props> = (props) => {
 
     onSubmit: (data) => {
       login(data).then((u) => {
-        dispatch(meFetchedAction(u));
+        authActions.login(u);
         history.push("/dashboard");
       });
     },
   });
+  console.log("this is login lehsun page");
 
   return (
     <div className="flex justify-center min-h-screen px-4 py-3 sm:px-6 lg:px-8">

@@ -3,17 +3,18 @@ import Button from "./Button/button";
 import { logout } from "../api/auth";
 
 import { useAppSelector } from "../store";
+import { meSelector } from "../selectors/auth.selectors";
 
 interface Props {}
 const Sidebar: React.FC<Props> = () => {
   // const { user } = useContext(AppContext);
-  const userFirstName = useAppSelector((state) => state.me?.first_name);
+  const user = useAppSelector(meSelector);
 
   return (
     <div>
       <div className="h-screen px-8 bg-gray-400 ">
         {" "}
-        <div className="bg-red-500">{userFirstName}</div>
+        <div className="bg-red-500">{user?.first_name}</div>
         <Button
           theme="secondary"
           onClick={() => {

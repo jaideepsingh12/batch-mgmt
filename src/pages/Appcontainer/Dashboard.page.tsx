@@ -3,18 +3,21 @@ import React, { memo, useEffect, useState } from "react";
 import { fetchGroups } from "../../api/group";
 import Button from "../../components/Button/button";
 import { HiSearch } from "react-icons/hi";
-import { useDispatch } from "react-redux";
+
 import { useAppSelector } from "../../store";
 import { Group } from "../../modals/Group";
+import { groupsAction } from "../../actions/groups.actions";
+import {
+  groupQuerySelector,
+  groupsFetchedSelector,
+} from "../../selectors/groups.selectors";
 
 interface Props {}
 const Dashboard: React.FC<Props> = (props) => {
-  // const [groups, setGroups] = useState<any>([]);
-  const [keyword, setKeyword] = useState("");
   const [keyword2, setKeyword2] = useState("");
   const [offset, setoffset] = useState(0);
   const [data, setData] = useState("");
-  const limit = 5;
+  const limit = 7;
   const imgError = (e: any) => {
     e.target.onerror = null;
     e.target.src = "https://www.snarkypuppy.com/press/logos/logo-pup.png";
@@ -24,17 +27,16 @@ const Dashboard: React.FC<Props> = (props) => {
     setData(e.target.firstChild.value);
     console.log(e.target.firstChild.value);
   };
-  const groups = useAppSelector((state) => state.groups);
-  const dispatch = useDispatch();
+  // const groups = useAppSelector((state) => state.groups);
+  const query = useAppSelector(groupQuerySelector);
+  const groups = useAppSelector(groupsFetchedSelector);
 
   useEffect(() => {
     fetchGroups({
       status: "all-groups",
-      query: data,
-      limit: limit,
-      offset: offset,
-    }).then((data) => dispatch({ type: "groups/fetch", payload: data }));
-  }, [data, offset, limit]);
+      query: query,
+    }).then((groups) => groupsAction.fetched(query, groups));
+  }, [query]);
 
   return (
     <div className="flex-grow ">
@@ -44,9 +46,9 @@ const Dashboard: React.FC<Props> = (props) => {
             type="text"
             id="autoSearch"
             className="w-4/5 rounded-full "
-            value={keyword}
+            value={query}
             placeholder={"search groups"}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => groupsAction.query(e.target.value)}
           />
         </div>
         <form onSubmit={handlesubmit} className="flex flex-1 align-middle">
@@ -67,7 +69,7 @@ const Dashboard: React.FC<Props> = (props) => {
       {groups.map(function (group: Group, index: number, groups: Group[]) {
         const className = index % 2 === 1 ? "bg-blue-100" : "bg-blue-300";
         return (
-          <div className={"flex mr-4 px-3 py-3 " + className}>
+          <div key={group.id} className={"flex mr-4 px-3 py-3 " + className}>
             <img
               src={group.group_image_url}
               onError={(e) => imgError(e)}
