@@ -2,13 +2,13 @@ import axios from "axios";
 import { Group } from "../modals/Group";
 import { BASE_URL } from "./base";
 
-interface GroupRequest {
+export interface GroupRequest {
   limit?: number;
   offset?: number;
-  query?: string;
+  query: string;
   status: "all-groups" | "favourite" | "archieved";
 }
-interface GroupResponse {
+export interface GroupResponse {
   data: Group[];
 }
 const url = BASE_URL + "/groups";

@@ -1,16 +1,18 @@
 // import { useFormik } from "formik";
 import React, { memo, useEffect, useState } from "react";
-import { fetchGroups } from "../../api/group";
+import { fetchGroups } from "../../middlewares/groups.middleware";
 import Button from "../../components/Button/button";
 import { HiSearch } from "react-icons/hi";
 
 import { useAppSelector } from "../../store";
 import { Group } from "../../modals/Group";
-import { groupsAction } from "../../actions/groups.actions";
+
 import {
+  groupLoadingSelector,
   groupQuerySelector,
   groupsFetchedSelector,
 } from "../../selectors/groups.selectors";
+import { FaSpinner } from "react-icons/fa";
 
 interface Props {}
 const Dashboard: React.FC<Props> = (props) => {
@@ -29,18 +31,19 @@ const Dashboard: React.FC<Props> = (props) => {
   };
   // const groups = useAppSelector((state) => state.groups);
   const query = useAppSelector(groupQuerySelector);
+  const loading = useAppSelector(groupLoadingSelector);
   const groups = useAppSelector(groupsFetchedSelector);
 
-  useEffect(() => {
-    fetchGroups({
-      status: "all-groups",
-      query: query,
-    }).then((groups) => groupsAction.fetched(query, groups));
-  }, [query]);
+  // useEffect(() => {
+  //   fetchGroups({
+  //     status: "all-groups",
+  //     query: query,
+  //   }).then((groups) => groupsAction.fetched(query, groups));
+  // }, [query]);
 
   return (
     <div className="flex-grow ">
-      <div className="flex justify-around mt-8 mb-4">
+      <div className="relative flex justify-around mt-8 mb-4">
         <div className="flex-1">
           <input
             type="text"
@@ -48,9 +51,14 @@ const Dashboard: React.FC<Props> = (props) => {
             className="w-4/5 rounded-full "
             value={query}
             placeholder={"search groups"}
-            onChange={(e) => groupsAction.query(e.target.value)}
+            onChange={(e) =>
+              fetchGroups({ query: e.target.value, status: "all-groups" })
+            }
           />
         </div>
+        {loading && (
+          <FaSpinner className="absolute bottom-0 text-xl left-1/3 fill-red text-red animate-spin"></FaSpinner>
+        )}
         <form onSubmit={handlesubmit} className="flex flex-1 align-middle">
           <input
             type="text"

@@ -1,8 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { LS_AUTH_TOKEN } from "./api/base";
-
 import { useAppSelector } from "./store";
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,13 +9,9 @@ import {
 } from "react-router-dom";
 
 import AppContainerPageLazy from "./pages/Appcontainer/AppContainer.lazy";
-
-// import AuthPage from "./pages/Auth.page";
 import NotFoundPage from "./pages/NotFoundPage";
 import AuthPageLazy from "./pages/Auth/Auth.lazy";
-
-import { me } from "./api/auth";
-import { authActions } from "./actions/Auth.actions";
+import { me } from "./middlewares/auth.middleware";
 import { meSelector } from "./selectors/auth.selectors";
 
 function App() {
@@ -29,7 +23,7 @@ function App() {
     if (!token || user) {
       return;
     }
-    me().then((u) => authActions.fetch(u));
+    me();
   }, []);
 
   if (!user && token) {

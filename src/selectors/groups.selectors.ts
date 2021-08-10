@@ -34,9 +34,19 @@ export const groupQueryMapSelector = createSelector(
 //   return groupState.byId;
 // };
 
-const groupbyIdSelector = createSelector(
+export const groupbyIdSelector = createSelector(
   [groupStateSelector],
   (groupState) => groupState.byId
+);
+
+const groupLoadingQuerySelector = createSelector(
+  [groupStateSelector],
+  (groupState) => groupState.loadingQuery
+);
+
+export const groupLoadingSelector = createSelector(
+  [groupQuerySelector, groupLoadingQuerySelector],
+  (query, loadingMap) => loadingMap[query]
 );
 
 // export const groupsFetchedSelector = (state: AppState) => {
