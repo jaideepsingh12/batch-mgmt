@@ -23,10 +23,10 @@ export const groupReducer: Reducer<GroupState> = (
     case GROUPS_QUERY:
       return {
         ...state,
-        query: action.payload.query,
+        query: action.payload,
         loadingQuery: {
           ...state.loadingQuery,
-          [action.payload.query]: action.payload.loading,
+          [action.payload]: true,
         },
       };
     case GROUPS_FETCHED:

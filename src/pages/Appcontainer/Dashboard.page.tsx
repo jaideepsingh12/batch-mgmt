@@ -92,6 +92,12 @@ const Dashboard: React.FC<Props> = (props) => {
           </div>
         );
       })}
+      {!loading && groups.length === 0 && (
+        <img
+          src="https://d33v4339jhl8k0.cloudfront.net/docs/assets/5923ee3b0428634b4a335ad3/images/5ff84209b5efec03af3f13f1/file-oVkLMSoszt.png"
+          alt="#"
+        />
+      )}
 
       <div className="flex justify-around mt-4 ">
         <Button
