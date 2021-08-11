@@ -8,7 +8,7 @@ import { useAppSelector } from "../../store";
 import { Group } from "../../modals/Group";
 
 import {
-  groupLoadingSelector,
+  groupsLoadingSelector,
   groupQuerySelector,
   groupsFetchedSelector,
 } from "../../selectors/groups.selectors";
@@ -31,7 +31,7 @@ const Dashboard: React.FC<Props> = (props) => {
   };
   // const groups = useAppSelector((state) => state.groups);
   const query = useAppSelector(groupQuerySelector);
-  const loading = useAppSelector(groupLoadingSelector);
+  const loading = useAppSelector(groupsLoadingSelector);
   const groups = useAppSelector(groupsFetchedSelector);
 
   // useEffect(() => {

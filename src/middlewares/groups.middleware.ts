@@ -1,19 +1,22 @@
+import axios, { AxiosAdapter, Canceler, CancelTokenSource } from "axios";
 import { groupsAction } from "../actions/groups.actions";
 import { GroupRequest, fetchGroups as fetchGroupsApi } from "../api/group";
-import { groupQueryLoadingSelector } from "../selectors/groups.selectors";
-import { store } from "../store";
+
+let canceler: Canceler | undefined;
 
 export const fetchGroups = (request: GroupRequest) => {
-  const queryLoading = groupQueryLoadingSelector(store.getState());
   const query = request.query;
-  const loading = queryLoading[query];
 
   groupsAction.query(query);
 
-  if (loading) {
-    return;
-  }
-  fetchGroupsApi(request).then((groups) => {
+  canceler && canceler();
+
+  const tokenSource = axios.CancelToken.source(); // this will give a token and corresponding cancelation function.
+
+  canceler = tokenSource.cancel;
+
+  fetchGroupsApi(request, tokenSource.token).then((groups) => {
     groupsAction.fetched(query, groups);
+    canceler = undefined;
   });
 };
