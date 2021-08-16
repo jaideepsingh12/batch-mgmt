@@ -1,9 +1,7 @@
 // import { useFormik } from "formik";
 import React, { memo, useEffect, useState } from "react";
-import { fetchGroups } from "../../middlewares/groups.middleware";
 import Button from "../../components/Button/button";
 import { HiSearch } from "react-icons/hi";
-
 import { useAppSelector } from "../../store";
 import { Group } from "../../modals/Group";
 
@@ -13,6 +11,10 @@ import {
   groupsFetchedSelector,
 } from "../../selectors/groups.selectors";
 import { FaSpinner } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { queryChangedAction } from "../../actions/groups.actions";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 interface Props {}
 const Dashboard: React.FC<Props> = (props) => {
@@ -34,12 +36,8 @@ const Dashboard: React.FC<Props> = (props) => {
   const loading = useAppSelector(groupsLoadingSelector);
   const groups = useAppSelector(groupsFetchedSelector);
 
-  // useEffect(() => {
-  //   fetchGroups({
-  //     status: "all-groups",
-  //     query: query,
-  //   }).then((groups) => groupsAction.fetched(query, groups));
-  // }, [query]);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <div className="flex-grow ">
@@ -51,9 +49,7 @@ const Dashboard: React.FC<Props> = (props) => {
             className="w-4/5 rounded-full "
             value={query}
             placeholder={"search groups"}
-            onChange={(e) =>
-              fetchGroups({ query: e.target.value, status: "all-groups" })
-            }
+            onChange={(e) => dispatch(queryChangedAction(e.target.value))}
           />
         </div>
         {loading && (
@@ -78,17 +74,19 @@ const Dashboard: React.FC<Props> = (props) => {
         const className = index % 2 === 1 ? "bg-blue-100" : "bg-blue-300";
         return (
           <div key={group.id} className={"flex mr-4 px-3 py-3 " + className}>
-            <img
-              src={group.group_image_url}
-              onError={(e) => imgError(e)}
-              alt="#"
-              className="object-cover w-16 h-16"
-            />
+            <Link to={"/groups/" + group.id}>
+              <img
+                src={group.group_image_url}
+                onError={(e) => imgError(e)}
+                alt="#"
+                className="object-cover w-16 h-16"
+              />
 
-            <div className="ml-6">
-              <p className="text-base font-bold ">{group.name}</p>{" "}
-              <p className="mt-4">{group.description}</p>
-            </div>
+              <div className="ml-6">
+                <p className="text-base font-bold ">{group.name}</p>{" "}
+                <p className="mt-4">{group.description}</p>
+              </div>
+            </Link>
           </div>
         );
       })}

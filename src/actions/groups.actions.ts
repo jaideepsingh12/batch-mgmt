@@ -1,22 +1,28 @@
-import { bindActionCreators } from "redux";
 import { Group } from "../modals/Group";
 import { store } from "../store";
-import { GROUPS_FETCHED, GROUPS_QUERY } from "./actions.constants";
+import {
+  GROUPS_FETCHED,
+  GROUPS_QUERY_CHANGED,
+  GROUP_FETCH_ONE,
+  GROUP_FETCH_ONE_COMPLETE,
+} from "./actions.constants";
 
-const queryAction = (query: string) => ({
-  type: GROUPS_QUERY,
+export const queryChangedAction = (query: string) => ({
+  type: GROUPS_QUERY_CHANGED,
   payload: query,
 });
 
-const FetchedAction = (query: string, groups: Group[] | void) => ({
+export const fetchedAction = (query: string, groups: Group[] | void) => ({
   type: GROUPS_FETCHED,
   payload: { query, groups },
 });
 
-export const groupsAction = bindActionCreators(
-  {
-    query: queryAction,
-    fetched: FetchedAction,
-  },
-  store.dispatch
-);
+export const fetchOneGroup = (id: number) => ({
+  type: GROUP_FETCH_ONE,
+  payload: id,
+});
+
+export const fetchOneGroupComplete = (group: Group) => ({
+  type: GROUP_FETCH_ONE_COMPLETE,
+  payload: group,
+});

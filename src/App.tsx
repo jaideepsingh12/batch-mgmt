@@ -11,8 +11,9 @@ import {
 import AppContainerPageLazy from "./pages/Appcontainer/AppContainer.lazy";
 import NotFoundPage from "./pages/NotFoundPage";
 import AuthPageLazy from "./pages/Auth/Auth.lazy";
-import { me } from "./middlewares/auth.middleware";
 import { meSelector } from "./selectors/auth.selectors";
+import { authActions } from "./actions/Auth.actions";
+import { me } from "./api/auth";
 
 function App() {
   // const [user, setUser] = useState<User>();
@@ -23,7 +24,7 @@ function App() {
     if (!token || user) {
       return;
     }
-    me();
+    me().then((u) => authActions.fetch(u));
   }, []);
 
   if (!user && token) {
@@ -51,6 +52,7 @@ function App() {
             path={[
               "/dashboard",
               "/records",
+              "/groups/:groupId",
               "batch/:batchnumber/lecture/:lecturenumber",
             ]}
             exact

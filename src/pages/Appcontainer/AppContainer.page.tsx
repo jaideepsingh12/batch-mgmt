@@ -7,6 +7,7 @@ import Recordings from "./Recordings.page";
 import logo from "../../img/logo.svg";
 import profile from "../../img/profile-16.jpeg";
 import { HiSearch } from "react-icons/hi";
+import GroupDetailPage from "./GroupDetailPage.page";
 
 interface Props {}
 const AppContainer: React.FC<Props> = () => {
@@ -31,6 +32,9 @@ const AppContainer: React.FC<Props> = () => {
         <Switch>
           <Route path="/dashboard">
             <DashboardPage></DashboardPage>
+          </Route>
+          <Route path="/groups/:groupId">
+            <GroupDetailPage></GroupDetailPage>
           </Route>
           <Route path="/records">
             <Recordings></Recordings>
